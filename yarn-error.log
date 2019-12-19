@@ -30,7 +30,7 @@ npm manifest:
   {
     "name": "ai",
     "version": "1.0.0",
-    "main": "index.js",
+    "main": "script.js",
     "license": "MIT",
     "private": true,
     "engines": {
@@ -46,7 +46,7 @@ npm manifest:
       "typescript": "^3.7.3"
     },
     "scripts": {
-      "build": "node index.js"
+      "build": "node script.js"
     }
   }
 
