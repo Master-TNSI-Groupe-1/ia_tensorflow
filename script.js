@@ -13,8 +13,16 @@ import 'babel-polyfill'
 const request = require('request')
 
 async function getData(_timestamp) {
+    var mapData = new Map()
+
+    for (let i = 0; i <= 23; i++) mapData.set(i, new Array())
+
     await request(`http://3.87.54.32:8081/api/daysAfter/3/${_timestamp}`, { json: true}, (err, res, body) => {
-        console.log(body)
+        body.forEach( (object) => {
+            let _datetime = new Date(object.currentdate)
+            mapData.get(_datetime.getHours()).push(object.numberuser);
+        })
+
     })
 }
 
