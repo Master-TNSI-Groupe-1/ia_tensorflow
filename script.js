@@ -13,8 +13,6 @@ import 'babel-polyfill'
 const request = require('request')
 
 async function runModel(mapData) {
-    console.log(mapData)
-
     const values = mapData.map(d => ({
         x: d.hours,
         y: d.users,
@@ -31,13 +29,10 @@ async function runModel(mapData) {
     );
 
     const tensor = convertToTensor(mapData)
-    console.log(tensor)
     const {hours, users} = tensor
-    console.log(hours, users)
 
     const model = createModel()
     console.log("Model created")
-    console.log(model)
     tfvis.show.modelSummary({name: 'Model Summary'}, model);
 
     await trainModel(model, hours, users)
@@ -79,9 +74,11 @@ function convertToTensor(data) {
 function createModel() {
     const model = tf.sequential(); 
     
-    model.add(tf.layers.dense({inputShape: [1], units: 40, useBias: true, activation: 'relu'}));
-    // model.add(tf.layers.dense({units: 50, useBias: true, activation: 'relu'}));
-    model.add(tf.layers.dense({units: 20, useBias: true, activation: 'relu'}));
+    model.add(tf.layers.dense({inputShape: [1], units: 100, useBias: true, activation: 'relu'}));
+    model.add(tf.layers.dense({units: 80, useBias: true, activation: 'relu'}));
+    model.add(tf.layers.dense({units: 80, useBias: true, activation: 'relu'}));
+    model.add(tf.layers.dense({units: 40, useBias: true, activation: 'relu'}));
+    model.add(tf.layers.dense({units: 40, useBias: true, activation: 'relu'}));
     model.add(tf.layers.dense({units: 1, useBias: true, activation: 'relu'}));
   
     return model;
@@ -95,7 +92,7 @@ async function trainModel(model, hours, users) {
       });
       
       const batchSize = 72;
-      const epochs = 200;
+      const epochs = 100;
       
       return await model.fit(hours, users, {
         batchSize,
