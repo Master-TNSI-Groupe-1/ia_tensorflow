@@ -13,15 +13,15 @@ import 'babel-polyfill'
 const request = require('request')
 
 async function getData(_timestamp) {
-    await request(`http://3.87.54.32:8081/api/hours/3/${_timestamp}`, { json: true}, (err, res, body) => {
-        console.log(res)
+    await request(`http://3.87.54.32:8081/api/daysAfter/3/${_timestamp}`, { json: true}, (err, res, body) => {
+        console.log(body)
     })
 }
 
 
 async function run() {
-    const timestamp = Date.now() - 86400000
-    getData(timestamp)
+    const timestamp = Date.now() - (86400000 * 30)
+    await getData(timestamp)
 }
 
 document.addEventListener('DOMContentLoaded', run)
